@@ -1,0 +1,84 @@
+<!doctype html>
+<html class="no-js" lang="" ng-app="MultiVideo">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/ionicons.min.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <!--    <script src="js/vendor/modernizr-2.8.3.min.js"></script>-->
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-sanitize.min.js"></script>
+
+    <script src="js/videogular.min.js"></script>
+    <scrip src="js/vg-controls.min.js"></scrip>
+
+
+
+    <script src="js/controllers.js"></script>
+    <script src="js/directives.js"></script>
+    <script src="js/main.js"></script>
+
+
+
+</head>
+
+<body ng-controller="VideoCtrl">
+    <script type="text/ng-template" id="videoTemplate.html">
+        <videogular vg-player-ready="controller.onPlayerReady($API)" vg-complete="controller.onCompleteVideo()" vg-theme="controller.config.theme.url">
+            <vg-media vg-src="videos[$index]" vg-tracks="controller.config.tracks">
+            </vg-media>
+
+            <vg-controls>
+                <vg-play-pause-button></vg-play-pause-button>
+                <vg-time-display>{{ currentTime | date:'mm:ss' }}</vg-time-display>
+                <vg-scrub-bar>
+                    <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+                </vg-scrub-bar>
+                <vg-time-display>{{ timeLeft | date:'mm:ss' }}</vg-time-display>
+                <vg-volume>
+                    <vg-mute-button></vg-mute-button>
+                    <vg-volume-bar></vg-volume-bar>
+                </vg-volume>
+                <vg-fullscreen-button></vg-fullscreen-button>
+            </vg-controls>
+
+            <vg-overlay-play></vg-overlay-play>
+            <vg-buffering></vg-buffering>
+            <vg-poster vg-url='controller.config.plugins.poster'></vg-poster>
+        </videogular>
+    </script>
+    <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <div class="controlsContainer">
+        <button ng-click="togglePlayPause()" class="ion-play"></button>
+        <button ng-click="stop()" class="ion-stop"></button>
+         <input type="range">
+        <span ng-bind="vgAPIArr[0].currentTime">{{vgAPIArray[0].currentTime | date:"mm:ss"}}</span>
+        <span ng-bind="vgAPIArr[0].totalTime">{{vgAPIArray[0].totalTime | date:"mm:ss"}}</span>
+
+    </div>
+    <div class="videoArrayContainer">
+        <videogular vg-player-ready="onPlayerReady($API,$index)" vg-complete="onCompleteVideo()"  ng-repeat="video in videos">
+            <vg-media vg-src="video.source">
+            </vg-media>
+        </videogular>
+        
+    </div>
+
+
+
+
+</body>
+
+</html>
