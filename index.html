@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title></title>
+    <title>Multi Video Player</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -13,7 +13,7 @@
 
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/ionicons.min.css">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/style.css">
 
     <!--    <script src="js/vendor/modernizr-2.8.3.min.js"></script>-->
     <script src="js/angular.min.js"></script>
@@ -27,57 +27,49 @@
     <script src="js/controllers.js"></script>
     <script src="js/directives.js"></script>
     <script src="js/main.js"></script>
-
-
-
 </head>
 
 <body ng-controller="VideoCtrl">
-    <script type="text/ng-template" id="videoTemplate.html">
-        <videogular vg-player-ready="controller.onPlayerReady($API)" vg-complete="controller.onCompleteVideo()" vg-theme="controller.config.theme.url">
-            <vg-media vg-src="videos[$index]" vg-tracks="controller.config.tracks">
-            </vg-media>
 
-            <vg-controls>
-                <vg-play-pause-button></vg-play-pause-button>
-                <vg-time-display>{{ currentTime | date:'mm:ss' }}</vg-time-display>
-                <vg-scrub-bar>
-                    <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
-                </vg-scrub-bar>
-                <vg-time-display>{{ timeLeft | date:'mm:ss' }}</vg-time-display>
-                <vg-volume>
-                    <vg-mute-button></vg-mute-button>
-                    <vg-volume-bar></vg-volume-bar>
-                </vg-volume>
-                <vg-fullscreen-button></vg-fullscreen-button>
-            </vg-controls>
+    <script type="text/ng-template" id="dropZone">
 
-            <vg-overlay-play></vg-overlay-play>
-            <vg-buffering></vg-buffering>
-            <vg-poster vg-url='controller.config.plugins.poster'></vg-poster>
-        </videogular>
     </script>
-    <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+    <script type="text/ng-template" id="muteBtn">
+
+    </script>
+
     <div class="controlsContainer">
-        <button ng-click="togglePlayPause()" class="ion-play"></button>
-        <button ng-click="stop()" class="ion-stop"></button>
-         <input type="range">
-        <span ng-bind="vgAPIArr[0].currentTime">{{vgAPIArray[0].currentTime | date:"mm:ss"}}</span>
-        <span ng-bind="vgAPIArr[0].totalTime">{{vgAPIArray[0].totalTime | date:"mm:ss"}}</span>
+        <button class="controlElement" ng-click="togglePlayPause()" ng-class="status=='paused'?'ion-play':'ion-pause'"></button>
+        <button class="controlElement ion-stop" ng-click="stop()" ng-class="ion-stop"></button>
+        <input class="controlElement" id="seekBar" name="volumeMain" type="range" ng-model="currentTime" min="0" ng-change="doSeek()" step="0.01">
+        <span class="controlElement timeText">
+            <span ng-bind="currentTime | mmss"></span>
+        <span>/</span>
+        <span ng-bind="duration | mmss"></span>
+        </span>
+        <button class="controlElement" ng-click="toggleMute([0,1,2,3])" ng-class="muted?'ion-volume-mute':'ion-volume-medium'"></button>
+        <input class="controlElement volumeBar" id="volumeMain" name="volumeMain" type="range" ng-model="volume" min="0" max="1" step="0.1" ng-click="setVolume()">
+        <div class="controlElement">
+            <label for="playbackRate1">1x</label>
+            <input id="playbackRate1" type="radio" ng-model="playbackRate" value="1" name="playbackRate" ng-change="setPlaybackRate()">
+            <label for="playbackRate2">2x</label>
+            <input id="playbackRate2" type="radio" ng-model="playbackRate" value="2" name="playbackRate" ng-change="setPlaybackRate()">
+            <label for="playbackRate3">3x</label>
+            <input id="playbackRate3" type="radio" ng-model="playbackRate" value="3" name="playbackRate" ng-change="setPlaybackRate()">
+        </div>
+    </div>
+    <div class="videosContainer">
+        <div class="videoContainer" ng-repeat="video in videos">
+
+            <video id="{{'video-'+$index}}" ng-src="{{video.src}}" dropzone="[video/mp4, video/ogg]" mutebtn="{{$index}}"></video>
+            <span class="buttonsContainer">
+                  <button id="{{'close-'+$index}}" class="closebtn ion-close"  ng-click="clearVideo([$index])"></button>
+            <button id="{{'mute-'+$index}}" class="mutebtn" ng-class="video.obj.muted?'ion-volume-mute':'ion-volume-medium'" ng-click="toggleMute([$index])" ></button>
+          
+            </span>
+        </div>
 
     </div>
-    <div class="videoArrayContainer">
-        <videogular vg-player-ready="onPlayerReady($API,$index)" vg-complete="onCompleteVideo()"  ng-repeat="video in videos">
-            <vg-media vg-src="video.source">
-            </vg-media>
-        </videogular>
-        
-    </div>
-
-
-
 
 </body>
 
