@@ -1,0 +1,54 @@
+
+$primary-color-dark:   #00796B;
+$primary-color:        #009688;
+$primary-color-light:  #B2DFDB;
+$primary-color-text:   #FFFFFF;
+$accent-color:         #FF5252;
+$primary-text-color:   #212121;
+$secondary-text-color: #727272;
+$divider-color:        #B6B6B6;
+
+.drag-target{
+    border: 2px $divider-color dashed;
+}
+.drop-zone-empty{
+    background: $primary-color;
+    md-icon{
+        color: $primary-color-text;
+        font-size: 128px;
+        margin-left: -10%;
+    }
+    p{
+        color: $primary-color-text;
+        font-family: RobotoDraft, Roboto, sans-serif;
+    }
+
+}
+md-grid-tile{
+    background: $primary-color;
+    md-icon{
+        color: $primary-color-text;
+        font-size: 128px;
+        margin-left: -10%;
+    }
+    p{
+        color: $primary-color-text;
+        font-family: RobotoDraft, Roboto, sans-serif;
+    }
+}
+.container{
+    background: $primary-color;
+    width: 100%;
+}
+vg-player{
+    flex: 0 0;
+}
+md-grid-list{
+    flex: 1 1;
+}
+video{
+    width: 100%;
+    margin: 0;
+    padding:0;
+}
+

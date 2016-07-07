@@ -1,0 +1,43 @@
+<md-sidenav-layout class="sidenav-layout">
+    <md-sidenav #mvpSidenav align="end" mode="over">
+        <button md-icon-button (click)="mvpSidenav.close()">
+            <md-icon>close</md-icon>
+        </button>
+        <!--<md-divider></md-divider>
+        <h3 md-subheader>Playback Speed</h3>
+        <md-list-item>
+            <md-icon md-list-avatar>directions_run</md-icon>
+
+            <md-radio-group class="radio-group" [(ngModel)]="playbackSpeed" color="primary">
+                <md-radio-button class="radio-button" *ngFor="let speed of playbackSpeedOptions" [value]="speed.value" color="primary">{{speed.label}}</md-radio-button>
+            </md-radio-group>
+        </md-list-item>
+        <md-divider></md-divider>-->
+
+        <md-list>
+            <!--<h3 md-subheader>Folders</h3>
+            <md-list-item *ngFor="let folder of folders">
+                <md-icon md-list-avatar>folder</md-icon>
+                <h4 md-line>{{folder.name}}</h4>
+                <p md-line class="demo-2"> {{folder.updated}} </p>
+            </md-list-item>-->
+            <!--<md-divider></md-divider>-->
+            <h3 md-subheader>Playback Speed</h3>
+            <md-radio-group class="radio-group" [(ngModel)]="playbackSpeed" color="primary">
+                <md-list-item>
+                    <p md-line *ngFor="let speed of playbackSpeedOptions">
+                        <md-radio-button md-line class="radio-button" [value]="speed.value" color="primary">{{speed.label}}</md-radio-button>
+                    </p>
+                </md-list-item>
+            </md-radio-group>
+            <!--<md-divider></md-divider>-->
+            <md-list-item>
+                {{currentTime}}
+            </md-list-item>
+        </md-list>
+    </md-sidenav>
+    
+    <mvp-video-controls></mvp-video-controls>
+    <mvp-video-elements #videoElements></mvp-video-elements>
+    
+</md-sidenav-layout>

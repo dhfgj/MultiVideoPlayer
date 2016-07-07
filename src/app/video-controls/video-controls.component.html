@@ -1,0 +1,36 @@
+<md-toolbar class="toolbar-background">
+    <button md-icon-button color="primary" (click)="rewind(10)">
+        <md-icon class="md-48">replay_10</md-icon>
+    </button>
+    <button md-fab color="primary" (click)="togglePlay()">
+        <md-icon>{{isPlaying ? 'pause' : 'play_arrow'}}</md-icon>
+    </button>
+    <button md-icon-button color="primary" (click)="forward(10)">
+        <md-icon class="md-48">forward_10</md-icon>
+    </button>
+    <button md-icon-button color="primary" (click)="stop(0)">
+        <md-icon class="md-48">stop</md-icon>
+    </button>
+    <button md-icon-button color="primary" (click)="toggleMute()">
+        <md-icon class="md-48">{{isMute ? 'volume_off' : 'volume_up'}}</md-icon>
+    </button>
+    <input class="fill-remaining-space" type="range" [(ngModel)]="my_value" [min]="my_min" [max]="my_max" />
+
+    <md-input type="number" min="0" max="24" class="input-time" maxLength="2" align="end" [(ngModel)]="timeHH" placeholder="HH">
+        <span md-prefix>&nbsp;</span>
+    </md-input>
+    <md-input type="number" min="0" max="59" class="input-time" maxLength="2" align="end" [(ngModel)]="timeMM" placeholder="MM">
+        <span md-prefix>:</span>
+    </md-input>
+    <md-input type="number" min="0" max="59" class="input-time" maxLength="2" align="end" [(ngModel)]="timeSS" placeholder="SS">
+        <span md-prefix>:</span>
+    </md-input>
+    <button md-icon-button color="primary" (click)="toggleMute()">
+        <md-icon class="md-48">content_copy</md-icon>
+    </button>
+    {{currentTime}}
+
+    <button md-icon-button color="accent" (click)="toggleSidenav()">
+        <md-icon>more_vert</md-icon>
+    </button>
+</md-toolbar>

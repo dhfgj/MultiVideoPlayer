@@ -1,0 +1,49 @@
+.fill-remaining-space{
+ flex: 1 1 auto;
+ margin-left:1em;
+ margin-right:1em;   
+}
+.input-time{
+    width : 2.1em;
+    padding: 0px;
+    text-align: left;
+    md-hint{
+        font-size: 0.75em;
+        top: 0px;
+        text-align: center;
+        margin: 0 auto;
+        width:100%;
+    }
+    md-prefix{
+        padding: 0;
+        margin: 0;
+    }
+}
+.radio-group{
+    .radio-button{
+            font-size: 0.75em;
+            padding: 0 !important;
+                margin: 5px;
+    }
+    .radio-button:before,.radio-button:after{
+        font-size: 0.75em;
+    }
+}
+.md-radio-label-content{
+                padding: 0 !important;
+                margin: 10px;
+}
+.md-fab-button{
+    margin-left:1em;
+ margin-right:1em;
+}
+.toolbar-background{
+//    background : $primary-color-dark;
+    color: #fff;
+}
+.md-accent[md-fab]{
+    // background :$accent-color;
+}
+.md-radio-checked .md-radio-outer-circle{
+    // border-color: $accent-color !important;
+}

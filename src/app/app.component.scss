@@ -1,0 +1,57 @@
+.sidenav-layout {
+    //       position: absolute;
+    // display: block;
+    // left: 0;
+    // right: 0;
+    // top: 0;
+    // bottom: 0;
+    // overflow: hidden;
+    md-content{
+        height: inherit !important;
+        overflow: hidden;
+    }
+}
+
+md-sidenav-layout{
+    md-content{
+        height: inherit !important;
+        overflow: hidden;
+    }
+}
+
+body{
+        // height : 100000px;
+        margin: 0;
+        padding: 0;
+        font-family: RobotoDraft, Roboto, sans-serif;
+}
+
+
+md-radio-button{
+    width: 100px;
+    overflow: hidden;
+    height: 1em;
+
+    ::-webkit-scrollbar{
+        display: none;
+    }
+    padding-left: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-top: -15px;
+    overflow: hidden;
+    #radio-1{
+        margin-top:15px;
+    }
+    .md-radio-label{
+        width: 100px;
+        float: left !important;
+        padding-left: 5px;
+    }
+    .md-radio-label-content{
+        padding-left: 10px
+    }
+}
+mvp-video-elements{
+    height: 100%;
+}
