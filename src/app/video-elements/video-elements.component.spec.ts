@@ -1,7 +1,8 @@
 /* tslint:disable:no-unused-variable */
 
 import { By, DomSanitizationService }           from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { DebugElement, ChangeDetectorRef } from '@angular/core';
+import { MVPService } from '../mvp.service';
 
 import {
   beforeEach, beforeEachProviders,
@@ -16,19 +17,19 @@ import { VideoElementsComponent } from './video-elements.component';
 
 describe('Component: VideoElements, sanitizer: DomSanitizationService', () => {
 
-let sanitizer;
+let changeDetectionRef;
+let mvpService;
 
- beforeEachProviders(() => [
-    DomSanitizationService
-  ]);
-
-  beforeEach(inject([DomSanitizationService], sanitizer => {
-    sanitizer = sanitizer;
+  beforeEach(inject([MVPService], mvpService => {
+    mvpService = mvpService;
+  }));
+  beforeEach(inject([ChangeDetectorRef], changeDetectionRef => {
+    changeDetectionRef = changeDetectionRef;
   }));
   
 
   it('should create an instance', () => {
-    let component = new VideoElementsComponent(sanitizer);
+    let component = new VideoElementsComponent(mvpService, changeDetectionRef);
     expect(component).toBeTruthy();
   });
 });
