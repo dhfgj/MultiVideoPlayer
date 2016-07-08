@@ -13,7 +13,7 @@
 <md-grid-list cols="2" rowHeight="16:9" (drop)="onDrop($event)" (ondrop)="onDrop($event)" (dragenter)="onDragEnter($event)"
     (dragleave)="onDragLeave($event)" (dragover)="onDragOver($event)" [ngClass]="{'drag-target': dragOver}" class="container">
     <md-grid-tile *ngFor="#videoSource of videoSources; let i= index" #videosContainer>
-        <video [id]="i" vg-media preload="auto" class="videoElement" controls>
+        <video [id]="i" vg-media preload="auto" class="videoElement">
             <source [src]="videoSource.src" [type]="videoSource.type">
         </video>
     </md-grid-tile>

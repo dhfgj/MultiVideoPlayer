@@ -24,6 +24,10 @@ $divider-color:        #B6B6B6;
     }
 
 }
+md-grid-list{
+    // flex: 1 1;
+    height: 100%;
+}
 md-grid-tile{
     background: $primary-color;
     md-icon{
@@ -43,11 +47,10 @@ md-grid-tile{
 vg-player{
     flex: 0 0;
 }
-md-grid-list{
-    flex: 1 1;
-}
+
 video{
-    width: 100%;
+    width: inherit;
+    height: inherit;
     margin: 0;
     padding:0;
 }
