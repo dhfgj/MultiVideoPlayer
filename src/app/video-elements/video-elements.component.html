@@ -4,13 +4,12 @@
     (dragleave)="onDragLeave($event)" (dragover)="onDragOver($event)" [ngClass]="{'drag-target': dragOver}" class="drop-zone-empty"
     *ngIf="!isMediaReady">
     <md-grid-tile #dropZone>
-        <div>
+        <div class="noselect">
             <md-icon>video_call</md-icon>
             <p>Drop Videos Here</p>
         </div>
     </md-grid-tile>
 </md-grid-list>
-{{currentTime/60/60 | number:'2.0-0'}}:{{currentTime/60 | number:'2.0-0'}}:{{currentTime | number:'2.0-0'}}
 <md-grid-list cols="2" rowHeight="16:9" (drop)="onDrop($event)" (ondrop)="onDrop($event)" (dragenter)="onDragEnter($event)"
     (dragleave)="onDragLeave($event)" (dragover)="onDragOver($event)" [ngClass]="{'drag-target': dragOver}" class="container">
     <md-grid-tile *ngFor="#videoSource of videoSources; let i= index" #videosContainer>

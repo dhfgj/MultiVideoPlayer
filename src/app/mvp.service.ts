@@ -17,6 +17,8 @@ export class MVPService {
   isPlaying: Subject<boolean>;
   isMute: Subject<boolean>;
   isMediaReady: Subject<boolean>;
+  currentTime:Subject<number>;
+  totalDuration:Subject<number>;
 
   constructor(sanitizer: DomSanitizationService) {
     this.sanitizer = sanitizer;
@@ -24,9 +26,10 @@ export class MVPService {
     this.isPlaying = new Subject();
     this.isMute = new Subject();
     this.isMediaReady = new Subject();
+    this.currentTime = new Subject();
+    this.totalDuration = new Subject();
   }
 
-  currentTime = 0;
   registerAPI(api: VgAPI): void {
     this.api = api;
   }
@@ -110,10 +113,15 @@ export class MVPService {
      */
     // this.api.subscriptions.
     console.log(this.api.subscriptions);
-
-    this.api.subscriptions[0].play.subscribe(event => { this.isPlaying.next(true) });
-    this.api.subscriptions[0].pause.subscribe(event => { this.isPlaying.next(false) });
-
+    //Subscribe to play event
+    this.api.subscriptions[0].play.subscribe(event => { 
+      this.isPlaying.next(true) 
+    });
+    //Subscribe to pause event
+    this.api.subscriptions[0].pause.subscribe(event => { 
+      this.isPlaying.next(false) 
+    });
+    //Subscribe to volume change event
     this.api.subscriptions[0].volumeChange.subscribe(event => {
       let volume = event.target.volume;
       if (volume === 0) {
@@ -123,8 +131,20 @@ export class MVPService {
       }
       console.log('VolumeChanged', event.target.volume)
     });
-    this.api.subscriptions[0].timeUpdate.subscribe(event => this.currentTime = event.target.currentTime);
-    console.log('Subscribed to timeUpdate');
+    //Subscribe to timeupdate event
+    this.api.subscriptions[0].timeUpdate.subscribe(event => {
+      this.currentTime.next(event.target.currentTime);
+    });
+    
+
+    //progress
+    this.api.subscriptions[0].progress.subscribe(event => {
+      // this.currentTime.next(event.target.currentTime);
+      console.log(event);
+      this.totalDuration.next(event.target.duration);
+    });
+
+    console.log('Subscriptions done');
   }
 
   addVideoSource(file): void {

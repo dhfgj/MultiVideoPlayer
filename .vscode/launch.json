@@ -1,0 +1,45 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch index.html with sourcemaps",
+            "type": "chrome",
+            "request": "launch",
+            "file": "${workspaceRoot}/index.html",
+            "sourceMaps": true,
+            "webRoot": "${workspaceRoot}"
+        },
+        {
+            "name": "Launch localhost with sourcemaps",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost:8080",
+            "sourceMaps": true,
+            "webRoot": "${workspaceRoot}"
+        },
+        {
+            "name": "Attach with sourcemaps",
+            "type": "chrome",
+            "request": "attach",
+            "url": "http://localhost:4200",
+            "port": 9222,
+            "sourceMaps": true,
+            "diagnosticLogging": true,
+            "webRoot": "${workspaceRoot}/src/"
+        },
+        {
+            "name": "Launch Node with sourcemaps",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost:4200",
+            "sourceMaps": true,
+            "diagnosticLogging": true,
+            "runtimeArgs": [
+                "--new-window",
+                "--user-data-dir=/Users/sr34812/Videos",
+                "--remote-debugging-port=9222" 
+                ],
+                "webRoot": "src/app/"
+        }
+    ]
+}

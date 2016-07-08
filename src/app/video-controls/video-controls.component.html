@@ -14,22 +14,22 @@
     <button md-icon-button color="primary" (click)="toggleMute()">
         <md-icon class="md-48">{{isMute ? 'volume_off' : 'volume_up'}}</md-icon>
     </button>
-    <input class="fill-remaining-space" type="range" [(ngModel)]="my_value" [min]="my_min" [max]="my_max" />
+    <input class="fill-remaining-space" type="range" [value]="getSecondsElapsed(currentTime)" [min]="0" [max]="getSecondsElapsed(totalDuration)" />
 
-    <md-input type="number" min="0" max="24" class="input-time" maxLength="2" align="end" [(ngModel)]="timeHH" placeholder="HH">
+    <md-input type="number" min="0" max="24" class="input-time" maxLength="2" align="end" placeholder="HH" (change)="updateCurrentTime('hh',$event)" [value]="currentTime | date:'HH'">
         <span md-prefix>&nbsp;</span>
     </md-input>
-    <md-input type="number" min="0" max="59" class="input-time" maxLength="2" align="end" [(ngModel)]="timeMM" placeholder="MM">
+    <md-input type="number" min="0" max="59" class="input-time" maxLength="2" align="end" placeholder="MM" (change)="updateCurrentTime('mm',$event)" value="{{currentTime | date:'mm'}}">
         <span md-prefix>:</span>
     </md-input>
-    <md-input type="number" min="0" max="59" class="input-time" maxLength="2" align="end" [(ngModel)]="timeSS" placeholder="SS">
+    <md-input type="number" min="0" max="59" class="input-time" maxLength="2" align="end" placeholder="SS" (change)="updateCurrentTime('ss',$event)" value="{{currentTime | date:'ss'}}">
         <span md-prefix>:</span>
     </md-input>
-    <button md-icon-button color="primary" (click)="toggleMute()">
+    <p class="time-duration">/ {{totalDuration | date:'HH:mm:ss'}}</p>
+    <input type="text" class="invisible inputToCopy" [value]="currentTime | date:'HH:mm:ss'"/>
+    <button md-icon-button color="primary" (click)=" copyTimeToClipboard()">
         <md-icon class="md-48">content_copy</md-icon>
     </button>
-    {{currentTime}}
-
     <button md-icon-button color="accent" (click)="toggleSidenav()">
         <md-icon>more_vert</md-icon>
     </button>

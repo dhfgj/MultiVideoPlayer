@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChild, QueryList} from '@angular/core';
 import {MD_TOOLBAR_DIRECTIVES} from '@angular2-material/toolbar';
 import {MD_BUTTON_DIRECTIVES} from '@angular2-material/button';
 import {MdIcon, MdIconRegistry} from '@angular2-material/icon';
@@ -18,14 +18,31 @@ import {MVPService} from '../mvp.service'
     providers: [MdIconRegistry],
 })
 export class VideoControlsComponent implements OnInit {
-    mvpService:MVPService;
+    mvpService: MVPService;
 
     isPlaying = false;
     isMute = false;
     isMediaReady = false;
     sidenavOpen = false;
+    currentTime: Date = new Date('0');
+    totalDuration: Date = new Date('0');
+    timeHH = 24;
+    timeMM = 59;
+    timeSS = 59;
+    constraints = {
+        min: {
+            'hh': 0,
+            'mm': 0,
+            'ss': 0
+        },
+        max: {
+            'hh': 24,
+            'mm': 59,
+            'ss': 59
+        }
+    };
 
-    constructor(mvpService:MVPService) {
+    constructor(mvpService: MVPService) {
         this.mvpService = mvpService;
         mvpService.isPlaying.subscribe(value => {
             this.isPlaying = value;
@@ -36,18 +53,24 @@ export class VideoControlsComponent implements OnInit {
         mvpService.isMediaReady.subscribe(value => {
             this.isMediaReady = value;
         });
-     }
+
+        mvpService.currentTime.subscribe(value => {
+            // console.log('set seconds', value);
+            this.currentTime = new Date('0');
+            this.currentTime.setSeconds(value);
+        });
+        mvpService.totalDuration.subscribe(value => {
+            // console.log('set totalDuration', value);
+            this.totalDuration = new Date('0');
+            this.totalDuration.setSeconds(value);
+        });
+    }
 
     ngOnInit() {
     }
 
-    timeHH = 24;
-    timeMM = 59;
-    timeSS = 59;
-    @Input() currenTime; 
-    
 
-    
+
 
 
     @Output() playStatusChanged = new EventEmitter();
@@ -58,7 +81,9 @@ export class VideoControlsComponent implements OnInit {
 
     play() {
         console.log('Controls Playing');
+        //Check currentTime, if present start from that time
         this.mvpService.play();
+
     }
     pause() {
         console.log('Controls Pausing');
@@ -88,24 +113,81 @@ export class VideoControlsComponent implements OnInit {
         }
     }
     rewind(seconds: number) {
-        this.seekTo('rewind',seconds);
+        this.seekTo('rewind', seconds);
     }
     forward(seconds: number) {
-        this.seekTo('forward',seconds);
+        this.seekTo('forward', seconds);
     }
-    stop():void{
-        this.seekTo('absolute',0);
+    stop(): void {
+        this.seekTo('absolute', 0);
         this.pause();
     }
-    seekTo(seekType:string,seconds: any) {
-        console.log('Seeking ',seekType,' by:', seconds);
-        this.mvpService.seek(seekType,seconds);
+
+    updateCurrentTime(type: string, $event): void {
+        //First pause the player, otherwise the updates get erratic
+        this.pause();
+        //Then set the newTime to currentTime
+        let newTime = new Date(this.currentTime.toString());
+
+        //Get the newValue fromthe event
+        let newValue = $event.target.value;
+
+        //Depending upon event type, set the newValue to newTime
+        switch (type) {
+            case 'hh':
+                console.log('hh', newValue);
+                newTime.setHours(newValue);
+                break;
+            case 'mm':
+                console.log('mm', newValue);
+                newTime.setMinutes(newValue);
+                break;
+            case 'ss':
+                console.log('ss', newValue);
+                newTime.setSeconds(newValue);
+                break;
+        }
+        /** 
+         * Date.getTime() gives us seconds since 1 Jan, 1970
+         * */
+        let totalSeconds = this.getSecondsElapsed(newTime);
+        console.log(totalSeconds);
+        this.seekTo('absolute', totalSeconds);
+    };
+
+    seekTo(seekType: string, seconds: any) {
+        console.log('Seeking ', seekType, ' by:', seconds);
+        this.mvpService.seek(seekType, seconds);
+    }
+
+    getSecondsElapsed(time: Date): number {
+        //Init new time object 
+        let initTime = new Date('0');
+        return time.getTime() / 1000 - initTime.getTime() / 1000
     }
 
     toggleSidenav(): void {
         this.sidenavStatusChanged.emit({
             value: true
         });
+    }
+    copyTimeToClipboard(): void {
+        try {
+
+            // if (document.queryCommandSupported('copy')){
+            let itc: any = document.querySelector('.inputToCopy');
+            // console.log(itc);
+            itc.select();
+            document.execCommand('copy');
+            itc.blur();
+            console.log('Copied');
+            // }else{
+            //     console.log('Copy Command not supported');
+
+            // }
+        } catch (e) {
+            console.error("Cannot Perform Copy", e);
+        }
     }
 
 }
