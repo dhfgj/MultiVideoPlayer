@@ -1,3 +1,12 @@
+
+$primary-color-dark:   #00796B;
+$primary-color:        #009688;
+$primary-color-light:  #B2DFDB;
+$primary-color-text:   #FFFFFF;
+$accent-color:         #FF5252;
+$primary-text-color:   #212121;
+$secondary-text-color: #727272;
+$divider-color:        #B6B6B6;
 .sidenav-layout {
     //       position: absolute;
     // display: block;
@@ -52,6 +61,22 @@ md-radio-button{
         padding-left: 10px
     }
 }
+
+mvp-video-controls{
+    position: absolute;
+    height: 54px;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    border-bottom: $primary-color soild 1px;
+    -webkit-box-shadow: 0 8px 6px -6px $primary-color-light;
+	   -moz-box-shadow: 0 8px 6px -6px $primary-color-light;
+	        box-shadow: 0 8px 6px -6px $primary-color-light;
+    
+}
 mvp-video-elements{
+    // position: fixed;
+    top: 54px;
     height: 100%;
 }
