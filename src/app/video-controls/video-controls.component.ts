@@ -24,8 +24,8 @@ export class VideoControlsComponent implements OnInit {
     isMute = false;
     isMediaReady = false;
     sidenavOpen = false;
-    currentTime: Date = new Date('0');
-    totalDuration: Date = new Date('0');
+    currentTime: Date = this.getNewDate(0,0,0);
+    totalDuration: Date = this.getNewDate(0,0,0);
     timeHH = 24;
     timeMM = 59;
     timeSS = 59;
@@ -56,13 +56,18 @@ export class VideoControlsComponent implements OnInit {
 
         mvpService.currentTime.subscribe(value => {
             // console.log('set seconds', value);
-            this.currentTime = new Date('0');
+            this.currentTime = this.getNewDate(0,0,0);
             this.currentTime.setSeconds(value);
         });
         mvpService.totalDuration.subscribe(value => {
             // console.log('set totalDuration', value);
-            this.totalDuration = new Date('0');
+            this.totalDuration = this.getNewDate(0,0,0);
             this.totalDuration.setSeconds(value);
+            
+            //Set the constraints on the input elements so selections cannot be made beyond video duration 
+            this.constraints.max.hh = this.totalDuration.getHours();
+            this.constraints.max.mm = this.totalDuration.getMinutes();
+            this.constraints.max.ss = this.totalDuration.getSeconds();
         });
     }
 
@@ -150,8 +155,8 @@ export class VideoControlsComponent implements OnInit {
         /** 
          * Date.getTime() gives us seconds since 1 Jan, 1970
          * */
-        let totalSeconds = this.getSecondsElapsed(newTime);
-        console.log(totalSeconds);
+        let totalSeconds = this.getTimeInSeconds(newTime);
+        // console.log(totalSeconds);
         this.seekTo('absolute', totalSeconds);
     };
 
@@ -160,9 +165,9 @@ export class VideoControlsComponent implements OnInit {
         this.mvpService.seek(seekType, seconds);
     }
 
-    getSecondsElapsed(time: Date): number {
+    getTimeInSeconds(time: Date): number {
         //Init new time object 
-        let initTime = new Date('0');
+        let initTime = this.getNewDate(0,0,0);
         return time.getTime() / 1000 - initTime.getTime() / 1000
     }
 
@@ -189,5 +194,7 @@ export class VideoControlsComponent implements OnInit {
             console.error("Cannot Perform Copy", e);
         }
     }
-
+    getNewDate(hh:number,mm:number,ss:number):Date{
+        return new Date(new Date().setHours(hh,mm,ss,0));
+    }
 }

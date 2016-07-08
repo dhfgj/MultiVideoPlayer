@@ -14,19 +14,23 @@
     <button md-icon-button color="primary" (click)="toggleMute()">
         <md-icon class="md-48">{{isMute ? 'volume_off' : 'volume_up'}}</md-icon>
     </button>
-    <input class="fill-remaining-space" type="range" [value]="getSecondsElapsed(currentTime)" [min]="0" [max]="getSecondsElapsed(totalDuration)" />
+    <input class="fill-remaining-space" type="range" [value]="getTimeInSeconds(currentTime)" [min]="0" [max]="getTimeInSeconds(totalDuration)" (change)="seekTo('absolute',$event.target.value)"
+    />
 
-    <md-input type="number" min="0" max="24" class="input-time" maxLength="2" align="end" placeholder="HH" (change)="updateCurrentTime('hh',$event)" [value]="currentTime | date:'HH'">
+    <md-input type="number" [min]="constraints.min.hh" [max]="constraints.max.hh" class="input-time" maxLength="2" align="end"
+        placeholder="HH" (change)="updateCurrentTime('hh',$event)" [value]="currentTime | date:'HH'">
         <span md-prefix>&nbsp;</span>
     </md-input>
-    <md-input type="number" min="0" max="59" class="input-time" maxLength="2" align="end" placeholder="MM" (change)="updateCurrentTime('mm',$event)" value="{{currentTime | date:'mm'}}">
+    <md-input type="number" [min]="constraints.min.mm" [max]="constraints.max.mm" class="input-time" maxLength="2" align="end"
+        placeholder="MM" (change)="updateCurrentTime('mm',$event)" value="{{currentTime | date:'mm'}}">
         <span md-prefix>:</span>
     </md-input>
-    <md-input type="number" min="0" max="59" class="input-time" maxLength="2" align="end" placeholder="SS" (change)="updateCurrentTime('ss',$event)" value="{{currentTime | date:'ss'}}">
+    <md-input type="number" [min]="constraints.min.ss" [max]="constraints.max.ss" class="input-time" maxLength="2" align="end"
+        placeholder="SS" (change)="updateCurrentTime('ss',$event)" value="{{currentTime | date:'ss'}}">
         <span md-prefix>:</span>
     </md-input>
     <p class="time-duration">/ {{totalDuration | date:'HH:mm:ss'}}</p>
-    <input type="text" class="invisible inputToCopy" [value]="currentTime | date:'HH:mm:ss'"/>
+    <input type="text" class="invisible inputToCopy" [value]="currentTime | date:'HH:mm:ss'" />
     <button md-icon-button color="primary" (click)=" copyTimeToClipboard()">
         <md-icon class="md-48">content_copy</md-icon>
     </button>
