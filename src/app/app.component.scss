@@ -7,31 +7,12 @@ $accent-color:         #FF5252;
 $primary-text-color:   #212121;
 $secondary-text-color: #727272;
 $divider-color:        #B6B6B6;
-.sidenav-layout {
-    //       position: absolute;
-    // display: block;
-    // left: 0;
-    // right: 0;
-    // top: 0;
-    // bottom: 0;
-    // overflow: hidden;
-    md-content{
-        height: inherit !important;
-        overflow: hidden;
-    }
-}
 
-md-sidenav-layout{
-    md-content{
-        height: inherit !important;
-        overflow: hidden;
-    }
-}
-
-body{
+html,body{
         // height : 100000px;
-        margin: 0;
+        margin: 0 auto !important;
         padding: 0;
+        overflow: hidden;
         font-family: RobotoDraft, Roboto, sans-serif;
 }
 
@@ -60,23 +41,4 @@ md-radio-button{
     .md-radio-label-content{
         padding-left: 10px
     }
-}
-
-mvp-video-controls{
-    position: absolute;
-    height: 54px;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 99;
-    border-bottom: $primary-color soild 1px;
-    -webkit-box-shadow: 0 8px 6px -6px $primary-color-light;
-	   -moz-box-shadow: 0 8px 6px -6px $primary-color-light;
-	        box-shadow: 0 8px 6px -6px $primary-color-light;
-    
-}
-mvp-video-elements{
-    // position: fixed;
-    top: 54px;
-    height: 100%;
 }
