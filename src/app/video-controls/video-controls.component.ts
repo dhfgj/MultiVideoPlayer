@@ -27,8 +27,8 @@ export class VideoControlsComponent implements OnInit {
 
     isMediaReady = false;
     sidenavOpen = false;
-    currentTime: Date = this.getNewDate(0,0,0);
-    totalDuration: Date = this.getNewDate(0,0,0);
+    currentTime: Date = this.getNewDate(0, 0, 0);
+    totalDuration: Date = this.getNewDate(0, 0, 0);
     timeHH = 24;
     timeMM = 59;
     timeSS = 59;
@@ -205,7 +205,7 @@ export class VideoControlsComponent implements OnInit {
 
     getTimeInSeconds(time: Date): number {
         //Init new time object 
-        let initTime = this.getNewDate(0,0,0);
+        let initTime = this.getNewDate(0, 0, 0);
         return time.getTime() / 1000 - initTime.getTime() / 1000
     }
 
@@ -232,7 +232,7 @@ export class VideoControlsComponent implements OnInit {
             console.error("Cannot Perform Copy", e);
         }
     }
-    getNewDate(hh:number,mm:number,ss:number):Date{
-        return new Date(new Date().setHours(hh,mm,ss,0));
+    getNewDate(hh: number, mm: number, ss: number): Date {
+        return new Date(new Date().setHours(hh, mm, ss, 0));
     }
 }
