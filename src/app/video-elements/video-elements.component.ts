@@ -1,5 +1,9 @@
-import { Component, OnInit, ViewChild, ViewChildren, ElementRef, QueryList, forwardRef, EventEmitter, ChangeDetectorRef} from '@angular/core';
-import { DomSanitizationService, SafeUrl} from '@angular/platform-browser';
+import { Component,
+    OnInit,
+    ViewChildren,
+    QueryList,
+    ChangeDetectorRef
+} from '@angular/core';
 import {VgPlayer, VgAPI, VgMedia} from 'videogular2/core';
 import {MD_GRID_LIST_DIRECTIVES} from '@angular2-material/grid-list';
 import {MD_BUTTON_DIRECTIVES} from '@angular2-material/button';
@@ -19,15 +23,16 @@ import {MVPService} from '../mvp.service';
         MdIcon,
         MD_BUTTON_DIRECTIVES
     ],
-    providers: [VgAPI, OVERLAY_PROVIDERS],
+    providers: [VgAPI, OVERLAY_PROVIDERS, MdIconRegistry],
 })
 export class VideoElementsComponent implements OnInit {
     @ViewChildren(VgMedia) videoElements: QueryList<VgMedia>;
 
     videosLoaded = false;
-    mvpService:MVPService;
-    videoSources:Array<Object>;
-    isMediaReady:boolean;
+    mvpService: MVPService;
+    videoSources: Array<Object>;
+    isMediaReady: boolean;
+    removeOldFilesOnDrop = true;
 
     ngAfterViewInit() {
         console.log(this.videoElements);
@@ -99,6 +104,17 @@ export class VideoElementsComponent implements OnInit {
      */
     getFileType(file): string {
         return file.type;
+    }
+
+        muteAll() {
+        this.mvpService.muteAll();
+    }
+    unmuteAll() {
+        this.mvpService.unmuteAll();
+    }
+
+    toggleMute(id:string): void {
+        this.mvpService.toggleMute(id);
     }
 
 }

@@ -13,8 +13,16 @@
 <md-grid-list cols="2" rowHeight="16:9" (drop)="onDrop($event)" (ondrop)="onDrop($event)" (dragenter)="onDragEnter($event)"
     (dragleave)="onDragLeave($event)" (dragover)="onDragOver($event)" [ngClass]="{'drag-target': dragOver}" class="container">
     <md-grid-tile *ngFor="#videoSource of videoSources; let i= index" #videosContainer>
-        <video [id]="i" vg-media preload="auto" class="videoElement">
+        <video [id]="videoSource.id" vg-media preload="auto" class="videoElement">
             <source [src]="videoSource.src" [type]="videoSource.type">
         </video>
+        <div class="video-element-buttons">
+            <button md-icon-button color="primary" (click)="toggleMute(videoSource.id)">
+                <md-icon class="md-48">{{isMute ? 'volume_off' : 'volume_up'}}</md-icon>
+            </button>
+            <button md-icon-button color="primary" >
+                <md-icon class="md-48">remove_circle_outline</md-icon>
+            </button>
+        </div>
     </md-grid-tile>
 </md-grid-list>

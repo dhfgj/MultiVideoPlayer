@@ -21,7 +21,10 @@ export class VideoControlsComponent implements OnInit {
     mvpService: MVPService;
 
     isPlaying = false;
-    isMute = false;
+
+    volumeStatus: any = {};
+    videoSources: any = [];
+
     isMediaReady = false;
     sidenavOpen = false;
     currentTime: Date = this.getNewDate(0,0,0);
@@ -47,8 +50,10 @@ export class VideoControlsComponent implements OnInit {
         mvpService.isPlaying.subscribe(value => {
             this.isPlaying = value;
         });
-        mvpService.isMute.subscribe(value => {
-            this.isMute = value;
+        mvpService.volumeStatus.subscribe(volumeStatus => {
+            this.volumeStatus[volumeStatus.id] = volumeStatus.value;
+            console.log(this.volumeStatus);
+
         });
         mvpService.isMediaReady.subscribe(value => {
             this.isMediaReady = value;
@@ -56,30 +61,62 @@ export class VideoControlsComponent implements OnInit {
 
         mvpService.currentTime.subscribe(value => {
             // console.log('set seconds', value);
-            this.currentTime = this.getNewDate(0,0,0);
-            this.currentTime.setSeconds(value);
+            this.currentTime = this.getNewDate(0, 0, value);
+            console.log('Current Time', this.currentTime);
+            // this.currentTime.setSeconds(value); 
         });
         mvpService.totalDuration.subscribe(value => {
             // console.log('set totalDuration', value);
-            this.totalDuration = this.getNewDate(0,0,0);
-            this.totalDuration.setSeconds(value);
-            
+            this.totalDuration = this.getNewDate(0, 0, value);
+            console.log('Total Duration', this.totalDuration);
+
+            // this.totalDuration.setSeconds(value);
+
             //Set the constraints on the input elements so selections cannot be made beyond video duration 
             this.constraints.max.hh = this.totalDuration.getHours();
             this.constraints.max.mm = this.totalDuration.getMinutes();
             this.constraints.max.ss = this.totalDuration.getSeconds();
+
+            //set the new video sources
+            this.videoSources = this.mvpService.getVideoSources();
+            console.log('totalProgress videosources', this.videoSources);
+
         });
+    }
+    getVolumeStatus(): string {
+
+        if (this.videoSources.length !== Object.keys(this.volumeStatus).length) {
+
+            this.videoSources.forEach(source => {
+                this.volumeStatus[source.id] = false;
+            });
+        }
+        var total = Object.keys(this.volumeStatus).length;
+        var totalMute = 0;
+        // var keys = Object.keys(this.volumeStatus);
+        for (var index = 0; index < total; index++) {
+            var key = Object.keys(this.volumeStatus)[index];
+            if (this.volumeStatus[key]) {
+                totalMute++;
+            }
+
+
+        }
+        //  console.log(index,totalMute);
+        if (totalMute === total) {
+            return 'volume_off';
+        } else if (totalMute < total && totalMute > 0) {
+            return 'volume_down';
+        } else if (totalMute === 0) {
+            return 'volume_up';
+        }
     }
 
     ngOnInit() {
     }
 
-
-
-
-
     @Output() playStatusChanged = new EventEmitter();
-    @Output() muteStatusChanged = new EventEmitter();
+    @Output() volumeStatusChanged = new EventEmitter();
     @Output() seekStatusChanged = new EventEmitter();
     @Output() sidenavStatusChanged = new EventEmitter();
 
@@ -103,18 +140,19 @@ export class VideoControlsComponent implements OnInit {
         }
     }
 
-    mute() {
-        this.mvpService.mute();
+    muteAll() {
+        this.mvpService.muteAll();
     }
-    unmute() {
-        this.mvpService.unmute();
+    unmuteAll() {
+        this.mvpService.unmuteAll();
     }
 
-    toggleMute(): void {
-        if (this.isMute) {
-            this.unmute();
+    toggleMuteAll(): void {
+        var status = this.getVolumeStatus();
+        if (status === 'volume_off') {
+            this.unmuteAll();
         } else {
-            this.mute();
+            this.muteAll();
         }
     }
     rewind(seconds: number) {
