@@ -9,17 +9,41 @@ $secondary-text-color: #727272;
 $divider-color:        #B6B6B6;
 
 html,body{
-        // height : 100000px;
-        margin: 0 auto !important;
+        margin: 0 auto ;
         padding: 0;
-        overflow: hidden;
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
         font-family: RobotoDraft, Roboto, sans-serif;
+        
 }
-
+.mvp-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* align items in Main Axis */
+    align-items: stretch; /* align items in Cross Axis */
+    align-content: stretch; /* Extra space in Cross Axis */
+    
+mvp-video-controls{
+    height: 64px;
+}
+mvp-video-elements{
+    height: 100%;
+    flex: 1 auto;
+    background-color: $accent-color;
+}
+.footer{
+    min-height: 20px;
+    background-color: $divider-color;
+    color: $secondary-text-color;
+}
+}
 
 md-radio-button{
     width: 100px;
-    overflow: hidden;
+    // overflow: hidden;
     height: 1em;
 
     ::-webkit-scrollbar{

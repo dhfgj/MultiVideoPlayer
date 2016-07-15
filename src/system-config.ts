@@ -34,7 +34,8 @@ const materialPkgs:string[] = [
   'grid-list',
   'checkbox',
   'sidenav',
-  'list'
+  'list',
+  'menu'
 ];
 
 materialPkgs.forEach((pkg) => {

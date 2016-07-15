@@ -215,7 +215,12 @@ export class MVPService {
     return this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(file));
   }
   getCurrentTime(): number {
-    return this.api.currentTime[0];
+    // let {  } = this.api.currentTime;
+    // console.log('CurrentTime', currTime, this.api.currentTime);
+    console.log('CurrentTime', this.api.currentTime);
+    
+    return this.api.currentTime[this.firstElement.id];
+    // return currTime;
   }
 
 }

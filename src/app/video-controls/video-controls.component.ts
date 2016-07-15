@@ -5,16 +5,26 @@ import {MdIcon, MdIconRegistry} from '@angular2-material/icon';
 import {FORM_DIRECTIVES} from '@angular/forms';
 import {MD_INPUT_DIRECTIVES} from '@angular2-material/input';
 import {MVPService} from '../mvp.service'
+import {MD_MENU_DIRECTIVES} from '@angular2-material/menu';
 
+ export const PlaybackSpeedValues:[number] =[
+        1,
+        1.5,
+        2
+    ];
 
-
-
+  export interface playbackSpeed  {
+        index:number,
+        value:number,
+        text:string
+    }
+   
 @Component({
     moduleId: module.id,
     selector: 'mvp-video-controls',
     templateUrl: 'video-controls.component.html',
     styleUrls: ['video-controls.component.css'],
-    directives: [MdIcon, MD_BUTTON_DIRECTIVES, MD_TOOLBAR_DIRECTIVES, MD_INPUT_DIRECTIVES],
+    directives: [MdIcon, MD_BUTTON_DIRECTIVES, MD_TOOLBAR_DIRECTIVES, MD_INPUT_DIRECTIVES, MD_MENU_DIRECTIVES],
     providers: [MdIconRegistry],
 })
 export class VideoControlsComponent implements OnInit {
@@ -44,6 +54,30 @@ export class VideoControlsComponent implements OnInit {
             'ss': 59
         }
     };
+    SEEK_VALUES = {
+        "TEN" : 10
+    }
+  
+    playbackSpeeds:[playbackSpeed];
+    currentPlaybackSpeed:playbackSpeed;
+    // playbackSpeeds = [
+    //     {
+    //         index:1,
+    //         value:1,
+    //         text:'1x'
+    //     },
+    //     {
+    //         index:2,
+    //         value:1.5,
+    //         text:'1.5x'
+    //     },
+    //     {
+    //         index:3,
+    //         value:2,
+    //         text:'2x'
+    //     },
+    // ]
+    //   dialogRef: MdDialogRef<JazzDialog>;
 
     constructor(mvpService: MVPService) {
         this.mvpService = mvpService;
@@ -62,7 +96,7 @@ export class VideoControlsComponent implements OnInit {
         mvpService.currentTime.subscribe(value => {
             // console.log('set seconds', value);
             this.currentTime = this.getNewDate(0, 0, value);
-            console.log('Current Time', this.currentTime);
+            // console.log('Current Time', this.currentTime);
             // this.currentTime.setSeconds(value); 
         });
         mvpService.totalDuration.subscribe(value => {
@@ -156,14 +190,18 @@ export class VideoControlsComponent implements OnInit {
         }
     }
     rewind(seconds: number) {
-        this.seekTo('rewind', seconds);
+        this.mvpService.seek('rewind', seconds);
     }
     forward(seconds: number) {
-        this.seekTo('forward', seconds);
+        this.mvpService.seek('forward', seconds);
     }
     stop(): void {
-        this.seekTo('absolute', 0);
+        this.mvpService.seek('absolute', 0);
         this.pause();
+    }
+    seekTo(seekType: string, seconds: any) {
+        console.log('Seeking ', seekType, ' by:', seconds);
+        this.mvpService.seek('absolute', seconds);
     }
 
     updateCurrentTime(type: string, $event): void {
@@ -198,10 +236,7 @@ export class VideoControlsComponent implements OnInit {
         this.seekTo('absolute', totalSeconds);
     };
 
-    seekTo(seekType: string, seconds: any) {
-        console.log('Seeking ', seekType, ' by:', seconds);
-        this.mvpService.seek(seekType, seconds);
-    }
+    
 
     getTimeInSeconds(time: Date): number {
         //Init new time object 
@@ -235,4 +270,26 @@ export class VideoControlsComponent implements OnInit {
     getNewDate(hh: number, mm: number, ss: number): Date {
         return new Date(new Date().setHours(hh, mm, ss, 0));
     }
+
+    getCurrentPlaybackSpeed():playbackSpeed {
+        return this.currentPlaybackSpeed;
+    }
+    setCurrentPlaybackSpeed(playbackSpeed:playbackSpeed):void{
+        this.currentPlaybackSpeed = playbackSpeed;
+    }
+// openDialog() {
+//     let config = new MdDialogConfig();
+//     config.viewContainerRef = this.viewContainerRef;
+
+//     this.dialog.open(JazzDialog, config).then(ref => {
+//       this.dialogRef = ref;
+//     });
+//   }
 }
+
+@Component({
+  selector: 'demo-jazz-dialog',
+  template: `<p>It's Jazz!</p>`
+})
+export class JazzDialog { }
+

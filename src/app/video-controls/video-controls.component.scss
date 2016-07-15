@@ -8,13 +8,24 @@ $primary-text-color:   #212121;
 $secondary-text-color: #727272;
 $divider-color:        #B6B6B6;
 
+md-toolbar{
+      position: relative;
+    display: block;
+    -webkit-box-flex: 0 0 auto;
+    -webkit-flex: 0 0 auto;
+    flex: 0 0 auto;
+    background-color: $primary-color-text;
+    -webkit-box-shadow: 0 3px 4px 0 rgba(0,0,0,0.14),0 3px 3px -2px rgba(0,0,0,0.12),0 1px 8px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 3px 4px 0 rgba(0,0,0,0.14),0 3px 3px -2px rgba(0,0,0,0.12),0 1px 8px 0 rgba(0,0,0,0.2);
+    z-index: 20;
+}
 .fill-remaining-space{
  flex: 1 1 auto;
  margin-left:1em;
  margin-right:1em;   
 }
 .input-time{
-    width : 2.1em;
+    width: initial;
     padding: 0px;
     text-align: left;
     font-size: 0.75em;
@@ -58,12 +69,7 @@ $divider-color:        #B6B6B6;
 //    background : $primary-color-dark;
     color: #fff;
 }
-.md-accent[md-fab]{
-    // background :$accent-color;
-}
-.md-radio-checked .md-radio-outer-circle{
-    // border-color: $accent-color !important;
-}
+
 .invisible{
     // visibility: hidden;
     // width: 0;
@@ -100,7 +106,7 @@ input[type=range]::-webkit-slider-runnable-track {
 }
 input[type=range]::-webkit-slider-thumb {
   box-shadow: 0px 0px 0px $primary-color;
-  border: 1px solid $primary-color-dark;
+  border: 1px solid $primary-color;
   height: 20px;
   width: 20px;
   border-radius: 50px;

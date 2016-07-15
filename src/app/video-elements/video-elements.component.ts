@@ -26,6 +26,7 @@ import {MVPService} from '../mvp.service';
     providers: [VgAPI, OVERLAY_PROVIDERS, MdIconRegistry],
 })
 export class VideoElementsComponent implements OnInit {
+
     @ViewChildren(VgMedia) videoElements: QueryList<VgMedia>;
 
     videosLoaded = false;
@@ -36,21 +37,25 @@ export class VideoElementsComponent implements OnInit {
 
     ngAfterViewInit() {
         console.log(this.videoElements);
-        this.videoElements.changes.subscribe(() => this.mvpService.registerVideoElements(this.videoElements.toArray()));
+        this.videoElements.changes.subscribe((changes) =>{ 
+            console.log('Change Detected: Video Elements', changes);
+            
+            this.mvpService.registerVideoElements(this.videoElements.toArray())
+            });
     }
 
-    constructor(mvpService: MVPService, changeDetectionRef: ChangeDetectorRef) {
-        
+    constructor(mvpService: MVPService, public changeDetectionRef: ChangeDetectorRef) {
+
         this.mvpService = mvpService;
         this.videoSources = mvpService.videoSources;
         this.isMediaReady = false;
         mvpService.isMediaReady.subscribe(value => {
-            console.log('MediaReady Event',value);
+            console.log('MediaReady Event', value);
             this.isMediaReady = value;
             changeDetectionRef.detectChanges();
         });
     }
-    removeOldFilesOnDrop = true;
+
 
     ngOnInit() {
         
@@ -93,11 +98,17 @@ export class VideoElementsComponent implements OnInit {
         files.forEach(file => {
             this.mvpService.addVideoSource(file);
         });
-
+        this.videoSources = this.mvpService.getVideoSources();
+        console.log('new video sources',this.videoSources);
+        
+        //TODO Implement correct event management
+        this.changeDetectionRef.detectChanges();
+        this.mvpService.isMediaReady.next(true);
         this.dragOver = false;
         console.log('Dropped', 'returning false');
+        
         return true;
-    }   
+    }
 
     /**
      * Gets the file type from teh File object

@@ -14,8 +14,8 @@
     <button md-icon-button color="primary" (click)="toggleMuteAll()">
         <md-icon class="md-48">{{getVolumeStatus()}}</md-icon>
     </button>
-    <input class="fill-remaining-space" type="range" [value]="getTimeInSeconds(currentTime)" [min]="0" [max]="getTimeInSeconds(totalDuration)" (change)="seekTo('absolute',$event.target.value)"
-    />
+    <input class="fill-remaining-space" type="range" [value]="getTimeInSeconds(currentTime)" [min]="0" [max]="getTimeInSeconds(totalDuration)"
+        (change)="seekTo('absolute',$event.target.value)" />
 
     <md-input type="number" [min]="constraints.min.hh" [max]="constraints.max.hh" class="input-time" maxLength="2" align="end"
         placeholder="HH" (change)="updateCurrentTime('hh',$event)" [value]="currentTime | date:'HH'">
@@ -34,7 +34,11 @@
     <button md-icon-button color="primary" (click)=" copyTimeToClipboard()">
         <md-icon class="md-48">content_copy</md-icon>
     </button>
-    <button md-icon-button color="accent" (click)="toggleSidenav()">
+    <button md-icon-button color="primary" (click)="openDialog()">
         <md-icon>more_vert</md-icon>
     </button>
+    <md-menu>
+        <button md-menu-item>Refresh</button>
+        <button md-menu-item>Settings</button>
+    </md-menu>
 </md-toolbar>
