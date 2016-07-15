@@ -1,0 +1,44 @@
+<md-toolbar class="toolbar-background">
+    <button md-icon-button color="primary" (click)="rewind(10)">
+        <md-icon class="md-48">replay_10</md-icon>
+    </button>
+    <button md-fab color="primary" (click)="togglePlay()">
+        <md-icon>{{isPlaying ? 'pause' : 'play_arrow'}}</md-icon>
+    </button>
+    <button md-icon-button color="primary" (click)="forward(10)">
+        <md-icon class="md-48">forward_10</md-icon>
+    </button>
+    <button md-icon-button color="primary" (click)="stop(0)">
+        <md-icon class="md-48">stop</md-icon>
+    </button>
+    <button md-icon-button color="primary" (click)="toggleMuteAll()">
+        <md-icon class="md-48">{{getVolumeStatus()}}</md-icon>
+    </button>
+    <input class="fill-remaining-space" type="range" [value]="getTimeInSeconds(currentTime)" [min]="0" [max]="getTimeInSeconds(totalDuration)"
+        (change)="seekTo('absolute',$event.target.value)" />
+
+    <md-input type="number" [min]="constraints.min.hh" [max]="constraints.max.hh" class="input-time" maxLength="2" align="end"
+        placeholder="HH" (change)="updateCurrentTime('hh',$event)" [value]="currentTime | date:'HH'">
+        <span md-prefix>&nbsp;</span>
+    </md-input>
+    <md-input type="number" [min]="constraints.min.mm" [max]="constraints.max.mm" class="input-time" maxLength="2" align="end"
+        placeholder="MM" (change)="updateCurrentTime('mm',$event)" value="{{currentTime | date:'mm'}}">
+        <span md-prefix>:</span>
+    </md-input>
+    <md-input type="number" [min]="constraints.min.ss" [max]="constraints.max.ss" class="input-time" maxLength="2" align="end"
+        placeholder="SS" (change)="updateCurrentTime('ss',$event)" value="{{currentTime | date:'ss'}}">
+        <span md-prefix>:</span>
+    </md-input>
+    <p class="time-duration">/ {{totalDuration | date:'HH:mm:ss'}}</p>
+    <input type="text" class="invisible inputToCopy" [value]="currentTime | date:'HH:mm:ss'" />
+    <button md-icon-button color="primary" (click)=" copyTimeToClipboard()">
+        <md-icon class="md-48">content_copy</md-icon>
+    </button>
+    <button md-icon-button color="primary" (click)="openDialog()">
+        <md-icon>more_vert</md-icon>
+    </button>
+    <md-menu>
+        <button md-menu-item>Refresh</button>
+        <button md-menu-item>Settings</button>
+    </md-menu>
+</md-toolbar>

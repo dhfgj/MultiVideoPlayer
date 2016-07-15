@@ -1,0 +1,22 @@
+<div (drop)="onDrop($event)" (ondrop)="onDrop($event)" (dragenter)="onDragEnter($event)" (dragleave)="onDragLeave($event)"
+    (dragover)="onDragOver($event)" [ngClass]="{'drag-target': dragOver}" class="drop-zone main-container" #dropZone>
+    <vg-player (onPlayerReady)="onPlayerReady($event)">
+    </vg-player>
+    <div class="noselect video-icon-container" *ngIf="!isMediaReady">
+        <md-icon>video_call</md-icon>
+        <p>Drop Videos Here</p>
+    </div>
+    <div class="videos-container" *ngIf="isMediaReady">
+        <div class="video-container" *ngFor="#videoSource of videoSources; let i= index">
+            <video [id]="videoSource.id" vg-media preload="auto" class="video-element">
+                <source [src]="videoSource.src" [type]="videoSource.type">
+            </video>
+            <div class="video-buttons">
+                <button md-icon-button color="primary" (click)="toggleMute(videoSource.id)">
+                <md-icon class="md-48">{{isMute ? 'volume_off' : 'volume_up'}}</md-icon>
+            </button>
+                <button md-icon-button color="primary"><md-icon class="md-48">remove_circle_outline</md-icon></button>
+            </div>
+        </div>
+    </div>
+</div>
