@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 import {VgAPI, VgMedia} from 'videogular2/core';
 import { DomSanitizationService, SafeUrl} from '@angular/platform-browser';
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
+
 
 @Injectable()
 export class MVPService {
@@ -20,8 +22,11 @@ export class MVPService {
   isMediaReady: Subject<boolean>;
   currentTime: Subject<number>;
   totalDuration: Subject<number>;
+  
+  items: FirebaseListObservable<any[]>;
 
-  constructor(sanitizer: DomSanitizationService) {
+
+  constructor(sanitizer: DomSanitizationService, af: AngularFire) {
     this.sanitizer = sanitizer;
     this.videoSources = [];
     this.isPlaying = new Subject();
@@ -29,6 +34,8 @@ export class MVPService {
     this.isMediaReady = new Subject();
     this.currentTime = new Subject();
     this.totalDuration = new Subject();
+
+        this.items = af.database.list('items');
   }
 
   registerAPI(api: VgAPI): void {
@@ -221,6 +228,9 @@ export class MVPService {
     
     return this.api.currentTime[this.firstElement.id];
     // return currTime;
+  }
+  getItems():FirebaseListObservable<any[]>{
+    return this.items;
   }
 
 }

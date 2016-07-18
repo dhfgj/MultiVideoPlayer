@@ -18,6 +18,8 @@ module.exports = function(defaults) {
       '@angular/**/*.+(js|js.map)',
       '@angular2-material/**/*',
       'videogular2/**/*',
+      'angularfire2/**/*.js',
+      'firebase/*.js'
       // 'flexboxgrid/dist/*.+(css|min.css)',
       // 'ng2-material/**/*'
     ]
