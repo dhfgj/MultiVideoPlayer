@@ -277,14 +277,13 @@ export class VideoControlsComponent implements OnInit {
     setCurrentPlaybackSpeed(playbackSpeed:playbackSpeed):void{
         this.currentPlaybackSpeed = playbackSpeed;
     }
-// openDialog() {
-//     let config = new MdDialogConfig();
-//     config.viewContainerRef = this.viewContainerRef;
-
-//     this.dialog.open(JazzDialog, config).then(ref => {
-//       this.dialogRef = ref;
-//     });
-//   }
+openMenu():void{
+    console.log('Menu not yet implemented');
+  }
+getItems():void{
+    console.log(this.mvpService.getItems());
+    
+}
 }
 
 @Component({
