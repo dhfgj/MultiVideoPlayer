@@ -6,6 +6,8 @@ import {FORM_DIRECTIVES} from '@angular/forms';
 import {MD_INPUT_DIRECTIVES} from '@angular2-material/input';
 import {MVPService} from '../mvp.service'
 import {MD_MENU_DIRECTIVES} from '@angular2-material/menu';
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
+
 
  export const PlaybackSpeedValues:[number] =[
         1,
@@ -57,6 +59,7 @@ export class VideoControlsComponent implements OnInit {
     SEEK_VALUES = {
         "TEN" : 10
     }
+    items:FirebaseListObservable<any[]>;
   
     playbackSpeeds:[playbackSpeed];
     currentPlaybackSpeed:playbackSpeed;
@@ -116,6 +119,8 @@ export class VideoControlsComponent implements OnInit {
             console.log('totalProgress videosources', this.videoSources);
 
         });
+
+        this.items = this.mvpService.getItems();
     }
     getVolumeStatus(): string {
 
