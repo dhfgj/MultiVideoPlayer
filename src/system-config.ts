@@ -9,6 +9,8 @@
 const map: any = {
   '@angular2-material': 'vendor/@angular2-material',
   'videogular2': 'vendor/videogular2',
+   'firebase': 'vendor/firebase/firebase.js',
+  'angularfire2': 'vendor/angularfire2'
   // 'flexboxgrid': 'vendor/flexboxgrid',
   // 'ng2-material': 'vendor/ng2-material'
 };
@@ -16,6 +18,10 @@ const map: any = {
 /** User packages configuration. */
 var packages: any = {
   'videogular2' : {defaultExtension: 'js'},
+    'angularfire2': {
+    defaultExtension: 'js',
+    main: 'angularfire2.js'
+  }
   // 'flexboxgrid' : {defaultExtension: 'js'},
   // 'ng2-material' : {
   //   defaultExtension: 'js',

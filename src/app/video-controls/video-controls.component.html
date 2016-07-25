@@ -34,9 +34,15 @@
     <button md-icon-button color="primary" (click)=" copyTimeToClipboard()">
         <md-icon class="md-48">content_copy</md-icon>
     </button>
-    <button md-icon-button color="primary" (click)="openDialog()">
+    <button md-icon-button color="primary" (click)="openMenu()">
         <md-icon>more_vert</md-icon>
     </button>
+    <!--<button md-icon-button color="primary" (click)="getItems()">
+        <md-icon>file_download</md-icon>
+    </button>-->
+    <!--<button *ngFor="let item of items | async">
+        <md-icon>item.icon</md-icon>
+    </button>-->
     <md-menu>
         <button md-menu-item>Refresh</button>
         <button md-menu-item>Settings</button>
